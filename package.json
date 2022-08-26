@@ -1,0 +1,23 @@
+{
+  "name": "node_study",
+  "version": "1.0.0",
+  "description": "Node_Study",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ChoiGD/Node_Study.git"
+  },
+  "author": "ChoiGD",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ChoiGD/Node_Study/issues"
+  },
+  "homepage": "https://github.com/ChoiGD/Node_Study#readme",
+  "devDependencies": {
+    "nodemon": "^2.0.19"
+  }
+}
