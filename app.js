@@ -1,4 +1,5 @@
 const http = require('http');
+<<<<<<< HEAD
 const fs = require('fs'); 
 
 
@@ -37,5 +38,12 @@ const server = http.createServer((req, res) =>{
     res.write('</html>')
     res.end();
 });
+=======
+const routes = require('./routes');
+
+console.log(routes.someText);
+
+const server = http.createServer(routes.handler);
+>>>>>>> 27d158e9c5e280997cf38bd2f96e7033a554cd9a
 
 server.listen(3000);
