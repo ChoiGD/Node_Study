@@ -16,6 +16,7 @@ const app = express();
 // });
 
 app.use(bodyParser.urlencoded({extends: false}));
+app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/admin',adminRouter);
 
