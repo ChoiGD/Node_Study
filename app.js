@@ -15,7 +15,7 @@ const app = express();
 //     next(); // 계속해서 다음 미들웨어를 실행 시키기위해서는 next()가 필수
 // });
 
-app.set('view engine', 'pug');
+app.set('view engine', 'ejs');
 app.set('views', 'views');
 
 app.use(bodyParser.urlencoded({extends: false}));
