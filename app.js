@@ -2,7 +2,7 @@ const path = require('path');
 
 const express = require('express');
 
-const adminData = require('./routes/admin');
+const adminRoutes = require('./routes/admin');
 
 const shopRouter = require('./routes/shop');
 
@@ -21,7 +21,7 @@ app.set('views', 'views');
 app.use(bodyParser.urlencoded({extends: false}));
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('/admin',adminData.routes);
+app.use('/admin',adminRoutes);
 
 app.use(shopRouter);
 
