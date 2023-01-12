@@ -12,12 +12,12 @@ const bodyParser = require('body-parser');
 
 const errorController = require('./controllers/error');
 
-const app = express();
+const Product = require('./models/product');
 
-// app.use('/',(req, res, next)=>{
-//     console.log('This always runs!');
-//     next(); // 계속해서 다음 미들웨어를 실행 시키기위해서는 next()가 필수
-// });
+const User = require('./models/user');
+
+
+const app = express();
 
 app.set('view engine', 'ejs');
 app.set('views', 'views');
@@ -25,17 +25,39 @@ app.set('views', 'views');
 app.use(bodyParser.urlencoded({extends: false}));
 app.use(express.static(path.join(__dirname, 'public')));
 
+app.use((req, res, next)=>{
+    User.findByPk(1)
+    .then(user =>{
+        req.user = user;
+        next();
+    })
+    .catch(err => console.log(err));
+});
+
+
 app.use('/admin',adminRoutes);
 
 app.use(shopRouter);
 
 app.use(errorController.get404);
 
+Product.belongsTo(User, { constraints: true, onDelete: 'CASCADE'});
+User.hasMany(Product);
 
 sequelize
+// .sync({ force: true })
 .sync()
-.then(res =>{
-    // console.log(res);
+.then(result =>{
+    return User.findByPk(1);
+})
+.then(user =>{
+    if (!user){
+        return User.create({ name: 'Max', email: 'test@test.com'});
+    }
+    return user;
+})
+.then(user =>{
+    // console.log(user);
     app.listen(3000);
 })
 .catch(err=>{console.log(err)});
