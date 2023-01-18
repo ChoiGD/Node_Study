@@ -4,12 +4,19 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const session = require('express-session');
+const MongoDBStore = require('connect-mongodb-session')(session);
 
 const errorController = require('./controllers/error');
-
 const User = require('./models/user');
 
+const MONGODB_URI =
+  'mongodb+srv://ChoiGD:12341234@cluster0.utdflyp.mongodb.net/shop';
+
 const app = express();
+const store = new MongoDBStore({
+  uri: MONGODB_URI,
+  collection: 'sessions'
+});
 
 app.set('view engine', 'ejs');
 app.set('views', 'views');
@@ -20,11 +27,17 @@ const authRoutes = require('./routes/auth');
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, 'public')));
-app.use(session({secret: 'my secret', resave: false, saveUninitialized: false}))
-
+app.use(
+  session({
+    secret: 'my secret',
+    resave: false,
+    saveUninitialized: false,
+    store: store
+  })
+);
 
 app.use((req, res, next) => {
-  User.findById('63c622cea63af8455f236876')
+  User.findById('63c79a30a0b65b9354e408f6')
     .then(user => {
       req.user = user;
       next();
@@ -38,25 +51,23 @@ app.use(authRoutes);
 
 app.use(errorController.get404);
 
-mongoose.set("strictQuery", false);
-
 mongoose
-  .connect('mongodb+srv://ChoiGD:12341234@cluster0.utdflyp.mongodb.net/?retryWrites=true&w=majority')
+  .connect(MONGODB_URI)
   .then(result => {
     User.findOne().then(user => {
       if (!user) {
         const user = new User({
           name: 'Choi',
-          email: "Choi@test.com",
+          email: 'Choi@test.com',
           cart: {
             items: []
           }
-        })
+        });
         user.save();
       }
     });
     app.listen(3000);
   })
   .catch(err => {
-    console.log(err)
+    console.log(err);
   });
