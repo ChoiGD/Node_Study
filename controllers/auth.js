@@ -1,18 +1,13 @@
 const crypto = require("crypto");
 
 const bcrypt = require("bcryptjs");
-const nodemailer = require("nodemailer");
-const sendgridTransport = require("nodemailer-sendgrid-transport");
+
+const transporter = require("@sendgrid/mail");
 
 const User = require("../models/user");
 
-const transporter = nodemailer.createTransport(
-  sendgridTransport({
-    auth: {
-      api_key:
-        "SG.ThkZyXOITOOT-Q13jShA3g.yj-H0-rT-nB7MHnH5eIr5IV9qWm-JgOinH7AXbGcGe0",
-    },
-  })
+transporter.setApiKey(
+  "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"
 );
 
 exports.getLogin = (req, res, next) => {
@@ -99,9 +94,9 @@ exports.postSignup = (req, res, next) => {
         })
         .then((result) => {
           res.redirect("/login");
-          return transporter.sendMail({
+          return transporter.send({
             to: email,
-            from: "shop@node-complete.com",
+            from: "choigd0307@gmail.com",
             subject: "Signup succeeded!",
             html: "<h1>You successfully signed up!</h1>",
           });
@@ -155,7 +150,7 @@ exports.postReset = (req, res, next) => {
       })
       .then((result) => {
         res.redirect("/");
-        transporter.sendMail({
+        transporter.send({
           to: req.body.email,
           from: "shop@node-complete.com",
           subject: "Password reset",
