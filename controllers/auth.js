@@ -1,14 +1,19 @@
 const crypto = require("crypto");
 
 const bcrypt = require("bcryptjs");
-
-const transporter = require("@sendgrid/mail");
+const nodemailer = require("nodemailer");
+const sendgridTransport = require("nodemailer-sendgrid-transport");
 
 const User = require("../models/user");
 
-transporter.setApiKey(
-  "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"
-);
+const transporter = nodemailer.createTransport({
+  host: "smtp.mailtrap.io",
+  port: 2525,
+  auth: {
+    user: "e290bd28612ac5",
+    pass: "9702c72c6ef7a4",
+  },
+});
 
 exports.getLogin = (req, res, next) => {
   let message = req.flash("error");
@@ -94,10 +99,10 @@ exports.postSignup = (req, res, next) => {
         })
         .then((result) => {
           res.redirect("/login");
-          return transporter.send({
+          return transporter.sendMail({
             to: email,
-            from: "choigd0307@gmail.com",
-            subject: "Signup succeeded!",
+            from: "node@nodetest.com",
+            subject: "Shingup succeeded!",
             html: "<h1>You successfully signed up!</h1>",
           });
         })
@@ -150,9 +155,9 @@ exports.postReset = (req, res, next) => {
       })
       .then((result) => {
         res.redirect("/");
-        transporter.send({
+        transporter.sendMail({
           to: req.body.email,
-          from: "shop@node-complete.com",
+          from: "node@nodetest.com",
           subject: "Password reset",
           html: `
             <p>You requested a password reset</p>
