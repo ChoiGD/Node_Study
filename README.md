@@ -8,5 +8,6 @@
 | 4 | MVC모델 | ☑️ |
 | 5 | SQL(MySQL, Sequelize) | ☑️ |
 | 6 | NoSQL(MongoDB, Mongoose) | ☑️ |
-| 7 | Session + Cookie + CSRF | 진행중  |
+| 7 | Session + Cookie + CSRF | ☑️  |
+| 8 | multer + pdfkit | ☑️  |
 
