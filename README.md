@@ -10,5 +10,5 @@
 | 6 | NoSQL(MongoDB, Mongoose) | ☑️ |
 | 7 | Session + Cookie + CSRF | ☑️  |
 | 8 | multer + pdfkit | ☑️  |
-| 8 | RestAPI | 진행예정  |
+| 8 | RestAPI | [이동](https://github.com/ChoiGD/NodeRestAPI_Study)  |
 
